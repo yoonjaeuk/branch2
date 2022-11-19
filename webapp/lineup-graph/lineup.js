@@ -21,7 +21,7 @@ builder
 // and two rankings
 const ranking = LineUpJS.buildRanking()
   .supportTypes()
-  .allColumns() // add all columns
+  .allColumns()
   .impose('a+cat', 'a', 'cat2') // create composite column
   .groupBy('cat')
   .sortBy('a', 'desc');
