@@ -1,7 +1,9 @@
 svg {
     font: 10px sans-serif;
-    position: absolute;
-  }
+    display: inline;
+    position: relative;
+
+}
   
   .background path {
     fill: none;

@@ -16,14 +16,14 @@ const speciesValue = (d) => d.labels;
 
 const margin = {
   top: 20,
-  right: 20,
-  bottom: 40,
+  right: 40,
+  bottom: 50,
   left: 50,
 };
-const radius = 5;
+const radius = 4;
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = window.innerWidth / 2;
+const height = window.innerHeight / 2;
 const svg = select('body')
   .append('svg')
   .attr('width', width)
