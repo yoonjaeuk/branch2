@@ -1,5 +1,5 @@
-var margin = { top: 30, right: 10, bottom: 50, left: 10 },
-  width = window.innerWidth / 2,
+var margin = { top: 330, right: 210, bottom: 250, left: 310 },
+  width = window.innerWidth / 2 - right,
   height = window.innerHeight / 2 - margin.bottom;
 
 var x = d3.scale.ordinal().rangePoints([0, width], 1),

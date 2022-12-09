@@ -21,3 +21,83 @@ html, body{
     margin-top:7px;
     padding-top: 450px;
 }
+
+
+.LLL{
+    margin-top:8px;
+    padding-left:10px;
+    background-color:white;
+    border-bottom:1px solid #d6d6d7;
+    border-right:1px solid #d6d6d7;
+  }
+
+#renderer{
+    background-color:white;
+    font-weight:300;
+    overflow:scroll;
+    overflow-x:hidden;
+    display: inline-block;
+    width:1280px;
+    padding-left:10px;
+    height:800px;
+    border-right:1px solid #d6d6d7;
+  
+  }
+
+#controller{
+    margin-top:5px;
+    margin-bottom:10px;
+  }
+
+#Value_w{
+    width:400px;
+  }
+  
+
+
+  /*멀티 슬라이더*/
+.ui-slider-horizontal .ui-slider-range{
+    width:0%;
+  }
+  #L_slider-range, #R_slider-range{
+    margin-top:25px;
+    width:300px;
+  }
+  .ui-widget-header{
+    background:white;
+  }
+  a {
+    text-decoration:none;
+  }
+  a:visited{
+    text-decoration:none;
+    color:black;
+  }
+  
+  
+  
+  /* slider */
+  .right-slide {
+      background: #F6D53C !important;
+      width: 100px;
+      left: 60%;
+      position: absolute;
+  }
+  
+  .right-slide2 {
+      background: #F6D53C !important;
+      width: 100px;
+      left: 60%;
+      position: absolute;
+  }
+  .ui-slider-range.ui-corner-all.ui-widget-header {
+      background : #9FD299;
+  }
+  #L_slider-range{
+      background : #F39073;
+  }
+  
+  #R_slider-range{
+      background : #F39073;
+  }
+  

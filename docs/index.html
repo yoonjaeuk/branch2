@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
+<link rel = "stylesheet" href = "visual/main.css">
 <head>
-    
+
   <script src="https://d3js.org/d3.v4.min.js"></script>
   
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -9,7 +11,6 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
   <div class="LLL">
-    
     <div id="L_slider-range" style="display:inline-block;"></div>
 
     <div id="L_controller">
@@ -20,17 +21,8 @@
       <input id="L_nValue_b" type="text" name="" value="16.6">
       <input id="L_nValue_l" type="text" name="" value="16.6">
     </div>
-
-  <div id = "renderer">
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js">
-    </script>
-  
-  </div>
-
- 
+</div>
 </head>
-
-<link rel = "stylesheet" href = "visual/main.css">
   
 
 <body>
@@ -56,7 +48,6 @@
 
  <hr>
   <footer>
-
     
     <div class="line_up_chart">
       <link href="https://unpkg.com/lineupjs/build/LineUpJS.css" rel="stylesheet" />
@@ -66,92 +57,82 @@
     </div>
 
   </footer>
+
+  <div id="renderer">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js">
+  </script>
+
+  <script src = "visual/Ranking.js"></script>
   
   <script>
     $(function () {
-        $("#L_slider-range").slider({
-            range: true,
-            min: 0,
-            max: 30,
-            values: [10, 20],
-            slide: function (event, ui) {
-                $("#amount").val(ui.values[0] + " - " + ui.values[1] + " - " + ui.values[2] + " - " + ui.values[3] + " - " 
-                + ui.values[4] + " - " + ui.values[5]);
-                L_listen(ui.values[0], ui.values[1], ui.values[2], ui.values[3], ui.values[4])
-                $("#L_nValue_d").val((ui.values[0]*1.66).toFixed(1));
-                $("#L_nValue_s").val(((ui.values[1] - ui.values[0])*1.66).toFixed(1));
-                $("#L_nValue_n").val(((ui.values[2] - ui.values[1])*1.66).toFixed(1));
-                $("#L_nValue_m").val(((ui.values[3] - ui.values[2])*1.66).toFixed(1));
-                $("#L_nValue_b").val(((ui.values[4] - ui.values[3])*1.66).toFixed(1));
-                $("#L_nValue_l").val(((30 - ui.values[4])*1.66).toFixed(1));
-
-
-
-                reposition();
-            }
-        });
-
-        reposition();
-        function reposition(){
-            setTimeout(function () {
-                var $slide =  $("#L_slider-range").find('.ui-slider-range');
-                var left = $slide.css('left').replace('px', '') * 1
-                    + $slide.css('width').replace('px', '') * 1;
-                $('.right-slide').css('left', left);
-                $('.right-slide').css('width', 300 - (left ) );
-                $('.right-slide').css('height', 14);
-            }, 200);
-
-        }
-
-        $("#L_slider-range").append('<div class="right-slide",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>');
-
-
-        $("#amount").val($("#L_slider-range").slider("values", 0) +
-            " - " + $("#L_slider-range").slider("values", 1) + " -2 " + $("#L_slider-range").slider("values", 2) + " -3 "  + 
-             $("#L_slider-range").slider("values", 3) + " -4 "  + $("#L_slider-range").slider("values", 4)) + " -5 ";
-             });
-</script>
-
-<!-- <script> 
-    // 우측 슬라이더
-    $(function () {
-        $("#R_slider-range").slider({
-            range: true,
-            min: 0,
-            max: 30,
-            values: [10, 20],
-            slide: function (event, ui) {
-                $("#amount").val(ui.values[0] + " - " + ui.values[1] + " - " + ui.values[2]);
-                R_listen(ui.values[0], ui.values[1])
-                $("#R_nValue_d").val((ui.values[0]*3.33).toFixed(1));
-                $("#R_nValue_s").val(((ui.values[1] - ui.values[0])*3.33).toFixed(1));
-                $("#R_nValue_n").val(((30 - ui.values[1])*3.33).toFixed(1));
-
-                reposition();
-            }
-        });
-
-        reposition();
-        function reposition(){
-            setTimeout(function () {
-                var $slide =  $("#R_slider-range").find('.ui-slider-range');
-                var left = $slide.css('left').replace('px', '') * 1
-                    + $slide.css('width').replace('px', '') * 1;
-                $('.right-slide2').css('left', left);
-                $('.right-slide2').css('width', 300 - (left ) );
-                $('.right-slide2').css('height', 14);
-            }, 200);
-
-        }
-
-        $("#R_slider-range").append('<div class="right-slide2",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>');
-
-
-        $("#amount").val($("#R_slider-range").slider("values", 0) +
-            " - " + $("#R_slider-range").slider("values", 1)) + " -2 ";
-    });
-</script>
--->
+     $('#L_slider-range').slider({
+       range: true,
+       min: 0,
+       max: 30,
+       values: [10, 20],
+       slide: function (event, ui) {
+         $('#amount').val(
+           ui.values[0] +
+             ' - ' +
+             ui.values[1] +
+             ' - ' +
+             ui.values[2] +
+             ' - ' +
+             ui.values[3] +
+             ' - ' +
+             ui.values[4] +
+             ' - ' +
+             ui.values[5],
+         );
+         L_listen(
+           ui.values[0],
+           ui.values[1],
+           ui.values[2],
+           ui.values[3],
+           ui.values[4],
+         );
+         $('#L_nValue_d').val((ui.values[0] * 1.66).toFixed(1));
+         $('#L_nValue_s').val(((ui.values[1] - ui.values[0]) * 1.66).toFixed(1));
+         $('#L_nValue_n').val(((ui.values[2] - ui.values[1]) * 1.66).toFixed(1));
+         $('#L_nValue_m').val(((ui.values[3] - ui.values[2]) * 1.66).toFixed(1));
+         $('#L_nValue_b').val(((ui.values[4] - ui.values[3]) * 1.66).toFixed(1));
+         $('#L_nValue_l').val(((30 - ui.values[4]) * 1.66).toFixed(1));
+   
+         reposition();
+       },
+     });
+   
+     reposition();
+     function reposition() {
+       setTimeout(function () {
+         var $slide = $('#L_slider-range').find('.ui-slider-range');
+         var left =
+           $slide.css('left').replace('px', '') * 1 +
+           $slide.css('width').replace('px', '') * 1;
+         $('.right-slide').css('left', left);
+         $('.right-slide').css('width', 300 - left);
+         $('.right-slide').css('height', 14);
+       }, 200);
+     }
+   
+     $('#L_slider-range').append(
+       '<div class="right-slide",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>',
+     );
+   
+     $('#amount').val(
+       $('#L_slider-range').slider('values', 0) +
+         ' - ' +
+         $('#L_slider-range').slider('values', 1) +
+         ' -2 ' +
+         $('#L_slider-range').slider('values', 2) +
+         ' -3 ' +
+         $('#L_slider-range').slider('values', 3) +
+         ' -4 ' +
+         $('#L_slider-range').slider('values', 4),
+     ) + ' -5 ';
+   });
+   </script>
 
 </body>

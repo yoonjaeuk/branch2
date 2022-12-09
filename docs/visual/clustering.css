@@ -1,7 +1,9 @@
 body {
     margin: 0;
     overflow: hidden;
-    position: relative;
+    position: fixed;
+    left: 30px;
+    top: 80px;
   }
   
   .tick text {
