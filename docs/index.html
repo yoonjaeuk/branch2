@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-
+  
 <link rel = "stylesheet" href = "visual/main.css">
 <head>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
-  
+  <!-- controller bar -->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
-  <div class="LLL">
+
+<div class="ctrl_house">
+  <div class="controll_panel1">
+   <div class="LLL">
     <div id="L_slider-range" style="display:inline-block;"></div>
 
     <div id="L_controller">
@@ -20,13 +23,33 @@
       <input id="L_nValue_m" type="text" name="" value="16.6" >
       <input id="L_nValue_b" type="text" name="" value="16.6">
       <input id="L_nValue_l" type="text" name="" value="16.6">
+    
     </div>
-</div>
+   </div>
+   </div> 
+  <div class="controll_panel2">
+   <div class="RRR">
+      <div class = "slide" id = "slide1"></div>
+      <!-- <div id="R_slider-ran0ge" style="display:inline-block;"></div> -->
+
+      <div id="R_controller">
+        <input id="R_nValue_d" type="text" name="" value="16.6" >
+        <input id="R_nValue_s" type="text" name="" value="16.6">
+        <input id="R_nValue_n" type="text" name="" value="16.6">
+        <input id="R_nValue_m" type="text" name="" value="16.6" >
+        <input id="R_nValue_b" type="text" name="" value="16.6">
+        <input id="R_nValue_l" type="text" name="" value="16.6">
+
+      </div>
+   </div>
+  </div>
+ </div>
+
 </head>
-  
+   
 
 <body>
-
+<!-- 
   <div class = "body_top">
     <div class = "right_clustering">
       <link rel = "stylesheet" href = "visual/clustering.css">
@@ -34,105 +57,243 @@
       <script src = "visual/clustering.js"></script>
     </div>
   </div>  
-  
+   
   <hr>
    
      
  <div class = "body_middle">
-   <div class = "Parallel_coordinates">
+   <div class = "left_clustering">
     <link rel = "stylesheet" href = "visual/Parallel_coor.css">
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="visual/Parallel_coor.js"></script>
   </div>
  </div>  
-
+ -->
  <hr>
+ 
   <footer>
-    
-    <div class="line_up_chart">
-      <link href="https://unpkg.com/lineupjs/build/LineUpJS.css" rel="stylesheet" />
-      <link rel = "stylesheet" href = "visual/line_up.css">
-      <script src="https://unpkg.com/lineupjs/build/LineUpJS.js"></script>
-      <script src="visual/lineup.js"></script>
+    <div class="body_right">
+      <div id="title_renderer"></div>
+      <div id="renderer"></div>
+      <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+     <script src = "visual/Ranking.js"></script>
+  
+  
     </div>
 
   </footer>
 
-  <div id="renderer">
+    <!--  
+  <div class="line_up_chart">
+    <link href="https://unpkg.com/lineupjs/build/LineUpJS.css" rel="stylesheet" />
+    <link rel = "stylesheet" href = "visual/line_up.css">
+    <script src="https://unpkg.com/lineupjs/build/LineUpJS.js"></script>
+    <script src="visual/lineup.js"></script>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js">
-  </script>
+   -->
 
-  <script src = "visual/Ranking.js"></script>
-  
   <script>
-    $(function () {
-     $('#L_slider-range').slider({
-       range: true,
-       min: 0,
-       max: 30,
-       values: [10, 20],
-       slide: function (event, ui) {
-         $('#amount').val(
-           ui.values[0] +
-             ' - ' +
-             ui.values[1] +
-             ' - ' +
-             ui.values[2] +
-             ' - ' +
-             ui.values[3] +
-             ' - ' +
-             ui.values[4] +
-             ' - ' +
-             ui.values[5],
-         );
-         L_listen(
-           ui.values[0],
-           ui.values[1],
-           ui.values[2],
-           ui.values[3],
-           ui.values[4],
-         );
-         $('#L_nValue_d').val((ui.values[0] * 1.66).toFixed(1));
-         $('#L_nValue_s').val(((ui.values[1] - ui.values[0]) * 1.66).toFixed(1));
-         $('#L_nValue_n').val(((ui.values[2] - ui.values[1]) * 1.66).toFixed(1));
-         $('#L_nValue_m').val(((ui.values[3] - ui.values[2]) * 1.66).toFixed(1));
-         $('#L_nValue_b').val(((ui.values[4] - ui.values[3]) * 1.66).toFixed(1));
-         $('#L_nValue_l').val(((30 - ui.values[4]) * 1.66).toFixed(1));
-   
-         reposition();
-       },
-     });
-   
-     reposition();
-     function reposition() {
-       setTimeout(function () {
-         var $slide = $('#L_slider-range').find('.ui-slider-range');
-         var left =
-           $slide.css('left').replace('px', '') * 1 +
-           $slide.css('width').replace('px', '') * 1;
-         $('.right-slide').css('left', left);
-         $('.right-slide').css('width', 300 - left);
-         $('.right-slide').css('height', 14);
-       }, 200);
-     }
-   
-     $('#L_slider-range').append(
-       '<div class="right-slide",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>',
-     );
-   
-     $('#amount').val(
-       $('#L_slider-range').slider('values', 0) +
-         ' - ' +
-         $('#L_slider-range').slider('values', 1) +
-         ' -2 ' +
-         $('#L_slider-range').slider('values', 2) +
-         ' -3 ' +
-         $('#L_slider-range').slider('values', 3) +
-         ' -4 ' +
-         $('#L_slider-range').slider('values', 4),
-     ) + ' -5 ';
-   });
+  $(function () {
+  $('#L_slider-range').slider({
+    range: true,
+    min: 0,
+    max: 60,
+    values: [10, 20, 30, 40, 50],
+    slide: function (event, ui) {
+      $('#amount').val(
+        ui.values[0] +
+          " - " +
+          ui.values[1] +
+          " - " +
+          ui.values[2] +
+          " - " +
+          ui.values[3] +
+          " - " +
+          ui.values[4],
+      );
+      L_listen(
+        ui.values[0],
+        ui.values[1],
+        ui.values[2],
+        ui.values[3],
+        ui.values[4],
+      );
+      $('#L_nValue_d').val((ui.values[0] * 1.66).toFixed(1));
+      $('#L_nValue_s').val(((ui.values[1] - ui.values[0]) * 1.66).toFixed(1));
+      $('#L_nValue_n').val(((ui.values[2] - ui.values[1]) * 1.66).toFixed(1));
+      $('#L_nValue_m').val(((ui.values[3] - ui.values[2]) * 1.66).toFixed(1));
+      $('#L_nValue_b').val(((ui.values[4] - ui.values[3]) * 1.66).toFixed(1));
+      $('#L_nValue_l').val(((60 - ui.values[4]) * 1.66).toFixed(1));
+
+      reposition();
+    },
+  });
+
+  reposition();
+  function reposition() {
+    setTimeout(function () {
+      var $slide = $('#L_slider-range').find('.ui-slider-range');
+      var left =
+        $slide.css('left').replace('px', '') * 1 +
+        $slide.css('width').replace('px', '') * 1;
+      $('.right-slide').css('left', left);
+      $('.right-slide').css('width', 300 - left);
+      $('.right-slide').css('height', 14);
+
+    }, 200);
+  }
+
+  $('#L_slider-range').append(
+    '<div class="right-slide",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>',
+  );
+
+  $('#amount').val(
+    $('#L_slider-range').slider('values', 0) +
+      ' - ' +
+      $('#L_slider-range').slider('values', 1) +
+      ' -2 ' +
+      $('#L_slider-range').slider('values', 2) +
+      ' -3 ' +
+      $('#L_slider-range').slider('values', 3) +
+      ' -4 ' +
+      $('#L_slider-range').slider('values', 4)) + ' -5 ';
+});
+
    </script>
 
+   <script>
+    
+    $(document).ready(function() {
+    
+    var doUpdate = function(event, ui) {
+        $('#slide1 .slide-back').remove();
+        $($('#slide1 a').get().reverse()).each(function(i) {
+            var bg = '#fff';
+            if(i == 1) {
+                bg = '#00f';
+            } else if(i == 2) {
+                bg = '#0f0';
+            } else if(i == 3) {
+                bg = '#f00';
+            } else if(i == 4) {
+                bg = '#0ff';
+            }
+            
+            $('#slide1').append($('<div></div>').addClass('slide-back').width($(this).offset().left - 5).css('background', bg));
+        });
+    };
+    
+    $('#slide1').slider({
+        slide: doUpdate,
+        change: doUpdate,
+        min: 0,
+        max: 60,
+        values: [ 10, 20, 30, 40, 50 ],
+    
+      slider: function (event, ui) {
+      $('#amount').val(
+        ui.values[0] +
+          " - " +
+          ui.values[1] +
+          " - " +
+          ui.values[2] +
+          " - " +
+          ui.values[3] +
+          " - " +
+          ui.values[4],
+      );
+      R_listen(
+        ui.values[0],
+        ui.values[1],
+        ui.values[2],
+        ui.values[3],
+        ui.values[4],
+      );
+      $('#R_nValue_d').val((ui.values[0] * 1.66).toFixed(1));
+      $('#R_nValue_s').val(((ui.values[1] - ui.values[0]) * 1.66).toFixed(1));
+      $('#R_nValue_n').val(((ui.values[2] - ui.values[1]) * 1.66).toFixed(1));
+      $('#R_nValue_m').val(((ui.values[3] - ui.values[2]) * 1.66).toFixed(1));
+      $('#R_nValue_b').val(((ui.values[4] - ui.values[3]) * 1.66).toFixed(1));
+      $('#R_nValue_l').val(((60 - ui.values[4]) * 1.66).toFixed(1));
+
+      reposition();
+    },
+
+    });
+    
+    doUpdate();
+});
+
+
+   </script>
+<!--  
+   <script>
+
+$(function () {
+  $('#R_slider-range').slider({
+    range: true,
+    min: 0,
+    max: 60,
+    values: [10, 20, 30, 40, 50],
+    slide: function (event, ui) {
+      $('#amount').val(
+        ui.values[0] +
+          " - " +
+          ui.values[1] +
+          " - " +
+          ui.values[2] +
+          " - " +
+          ui.values[3] +
+          " - " +
+          ui.values[4],
+      );
+      L_listen(
+        ui.values[0],
+        ui.values[1],
+        ui.values[2],
+        ui.values[3],
+        ui.values[4],
+      );
+      $('#R_nValue_d').val((ui.values[0] * 1.66).toFixed(1));
+      $('#R_nValue_s').val(((ui.values[1] - ui.values[0]) * 1.66).toFixed(1));
+      $('#R_nValue_n').val(((ui.values[2] - ui.values[1]) * 1.66).toFixed(1));
+      $('#R_nValue_m').val(((ui.values[3] - ui.values[2]) * 1.66).toFixed(1));
+      $('#R_nValue_b').val(((ui.values[4] - ui.values[3]) * 1.66).toFixed(1));
+      $('#R_nValue_l').val(((60 - ui.values[4]) * 1.66).toFixed(1));
+
+      reposition();
+    },
+  });
+
+  reposition();
+  function reposition() {
+    setTimeout(function () {
+      var $slide = $('#R_slider-range').find('.ui-slider-range');
+      var left =
+        $slide.css('left').replace('px', '') * 1 +
+        $slide.css('width').replace('px', '') * 1;
+      $('.right-slide').css('left', left);
+      $('.right-slide').css('width', 300 - left);
+      $('.right-slide').css('height', 14);
+    }, 200);
+  }
+
+  $('#R_slider-range').append(
+    '<div class="right-slide",style="position: absolute; height:30px; width: 80px; background:#f00 !important;"></div>',
+  );
+
+  $('#amount').val(
+    $('#R_slider-range').slider('values', 0) +
+      ' - ' +
+      $('#R_slider-range').slider('values', 1) +
+      ' -2 ' +
+      $('#R_slider-range').slider('values', 2) +
+      ' -3 ' +
+      $('#R_slider-range').slider('values', 3) +
+      ' -4 ' +
+      $('#R_slider-range').slider('values', 4)) + ' -5 ';
+});
+
+   </script>
+ -->
 </body>

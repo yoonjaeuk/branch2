@@ -1,6 +1,6 @@
-var margin = { top: 330, right: 210, bottom: 250, left: 310 },
-  width = window.innerWidth / 2 - right,
-  height = window.innerHeight / 2 - margin.bottom;
+var margin = { top: 30, right: 20, bottom: 50, left: 10 },
+  width = window.innerWidth / 2,
+  height = window.innerHeight / 2;
 
 var x = d3.scale.ordinal().rangePoints([0, width], 1),
   y = {},
@@ -19,7 +19,7 @@ var svg = d3
   .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-d3.csv('visual/최종_데이터.csv', function (error, cars) {
+d3.csv('visual/qs데이터2.csv', function (error, cars) {
   // Extract the list of dimensions and create a scale for each.
   x.domain(
     (dimensions = d3.keys(cars[0]).filter(function (d) {
