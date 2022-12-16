@@ -8,22 +8,28 @@ var L_weight_d = 10;
 var L_weight_s = 10;
 var L_weight_n = 10;
 var L_weight_m = 10;
+/*
 var L_weight_b = 10;
 var L_weight_l = 10;
+*/
 
 var R_weight_d = 10;
 var R_weight_s = 10;
 var R_weight_n = 10;
 var R_weight_m = 10;
+/*
 var R_weight_b = 10;
 var R_weight_l = 10;
-
+*/
+/*
 var max_rep_score = [];
 var max_fsr_score = [];
 var max_cpf_score = [];
+/*
 var max_int_score = [];
 var max_irn_score = [];
 var max_ger_score = [];
+*/
 
 var group1 = svg.append('g');
 var group2 = svg.append('g');
@@ -32,71 +38,37 @@ var groupLine = svg.append('g');
 var rankOrigin = [];
 var rankWeighted = [];
 
-function L_listen(c1, c2, c3, c4, c5) {
+var color_r = '#cd2e6e'; //스파클 라인 색
+var color_b = '#2e32cd';
+
+function L_listen(c1, c2, c3) {
   group1.remove();
   group1 = svg.append('g');
   group1.attr('transform', 'translate(0,0)');
-
   L_weight_d = c1;
   L_weight_s = c2 - c1;
   L_weight_n = c3 - c2;
-  L_weight_m = c4 - c3;
-  L_weight_b = c5 - c4;
-  L_weight_l = 60 - c5;
+  L_weight_m = 40 - c3;
 
-  rankSort(
-    L_weight_d,
-    L_weight_s,
-    L_weight_n,
-    L_weight_m,
-    L_weight_b,
-    L_weight_l,
-  );
+  rankSort(L_weight_d, L_weight_s, L_weight_n, L_weight_m);
   rankOrigin = makeRank();
-  update(
-    d,
-    group1,
-    L_weight_d,
-    L_weight_s,
-    L_weight_n,
-    L_weight_m,
-    L_weight_b,
-    L_weight_l,
-  );
+  update(d, group1, L_weight_d, L_weight_s, L_weight_n, L_weight_m);
   drawCompareLine();
 }
 
-function R_listen(c1, c2, c3, c4, c5) {
+function R_listen(c1, c2, c3) {
   group2.remove();
   group2 = svg.append('g');
-  group2.attr('transform', 'translate(0,0)');
+  group2.attr('transform', 'translate(750,0)');
 
   R_weight_d = c1;
   R_weight_s = c2 - c1;
   R_weight_n = c3 - c2;
-  R_weight_m = c4 - c3;
-  R_weight_b = c5 - c4;
-  R_weight_l = 60 - c5;
+  R_weight_m = 40 - c3;
 
-  rankSort(
-    R_weight_d,
-    R_weight_s,
-    R_weight_n,
-    R_weight_m,
-    R_weight_b,
-    R_weight_l,
-  );
-  rankOrigin = makeRank();
-  update(
-    d,
-    group2,
-    R_weight_d,
-    R_weight_s,
-    R_weight_n,
-    R_weight_m,
-    R_weight_b,
-    R_weight_l,
-  );
+  rankSort(R_weight_d, R_weight_s, R_weight_n, R_weight_m);
+  rankWeighted = makeRank();
+  update(d, group2, R_weight_d, R_weight_s, R_weight_n, R_weight_m);
   drawCompareLine();
 }
 
@@ -178,21 +150,19 @@ function drawCompareLine() {
 }
 
 //ranking sorting
-function rankSort(w_d, w_s, w_n, w_m, w_b, w_l) {
+function rankSort(w_d, w_s, w_n, w_m) {
   var ret = _.sortBy(d, function (each) {
     var col =
       each['rep score'] * w_d +
       each['fsr score'] * w_s +
       each['cpf score'] * w_n +
-      each['int score'] * w_m +
-      each['irn score'] * w_b +
-      each['ger score'] * w_l;
+      each['int score'] * w_m;
     return -col;
   });
   d = ret;
 }
 
-function getMax(data) {
+/*function getMax(data) {
   // 각 주 마다 download, streaming, social 최대 값 구하기
 
   var max_rep_score = _.maxBy(data, function (d) {
@@ -225,7 +195,7 @@ function getMax(data) {
     d['cpf score'] = v;
     return v;
   });
-
+  /*
   var max_int_score = _.maxBy(data, function (d) {
     // * 1 = int 형식
     var v = d['int score'];
@@ -251,20 +221,23 @@ function getMax(data) {
     v = v.replace(/,/g, '');
     d['ger score'] = v;
     return v;
+    
   });
-
+*/
+/*
   max_rep_score.push(max_rep_score['rep score']);
   max_fsr_score.push(max_fsr_score['fsr score']);
   max_cpf_score.push(max_cpf_score['cpf score']);
+  
   max_int_score.push(max_int_score['int score']);
   max_irn_score.push(max_irn_score['irn score']);
   max_ger_score.push(max_ger_score['ger score']);
-}
+  */
+//}
 
-d3.json('output/qs데이터.json', function (data) {
+d3.json('visual/sqq데이터.json', function (data) {
   d = data;
-  getMax(d);
-  rankSort(10, 10, 10, 10, 10, 10);
+  rankSort(10, 10, 10, 10);
   rankOrigin = makeRank();
   rankWeighted = makeRank();
 
@@ -272,28 +245,9 @@ d3.json('output/qs데이터.json', function (data) {
 
   group1.attr('transform', 'translate(460, 20)');
   group2.attr('transform', 'translate(750, 0)');
-  update(
-    d,
-    group1,
-    L_weight_d,
-    L_weight_s,
-    L_weight_n,
-    L_weight_m,
-    L_weight_b,
-    L_weight_l,
-  );
-  update(
-    d,
-    group2,
-    R_weight_d,
-    R_weight_s,
-    R_weight_n,
-    R_weight_m,
-    R_weight_b,
-    R_weight_l,
-  );
+  update(d, group1, L_weight_d, L_weight_s, L_weight_n, L_weight_m);
+  update(d, group2, R_weight_d, R_weight_s, R_weight_n, R_weight_m);
 });
-
 //제목
 title
   .append('text')
@@ -332,16 +286,7 @@ title
   .text('institution')
   .style('font', '17px notosanskr');
 
-function update(
-  d,
-  parent,
-  weight_d,
-  weight_s,
-  weight_n,
-  weight_m,
-  weight_b,
-  weight_l,
-) {
+function update(d, parent, weight_d, weight_s, weight_n, weight_m) {
   //console.log("update", d, parent);
   var height = 27;
   // adjust the value
@@ -441,51 +386,58 @@ function update(
     parent
       .append('rect')
       .attr('y', i * height)
-      .attr('x', 80)
+      .attr('x', 280)
       .attr('height', height - 2)
       .attr('fill', '#F39073')
       // max_downloads[0] -> 이거 따로 max_download로 바꿔야 함.
-      .attr('width', d['rep score'] * weight_d);
+      .attr('width', (d['rep score'] * weight_d) / 20);
 
     // fsr score
     parent
       .append('rect')
       .attr('y', i * height)
-      .attr('x', 80 + d['rep score'] * weight_d)
+      .attr('x', 280 + (d['rep score'] * weight_d) / 20)
       .attr('height', height - 2)
       .attr('fill', '#9FD299')
-      .attr('width', d['fsr score'] * weight_s);
+      .attr('width', (d['fsr score'] * weight_s) / 20);
 
     // cpf score
     parent
       .append('rect')
       .attr('y', i * height)
-      .attr('x', 80 + d['rep score'] * weight_d + d['fsr score' * weight_s])
+      .attr(
+        'x',
+        280 +
+          (d['rep score'] * weight_d) / 20 +
+          (d['fsr score'] * weight_s) / 20,
+      )
       .attr('height', height - 2)
       .attr('fill', '#F6D53C')
-      .attr('width', d['cpf score'] * weight_n);
+      .attr('width', (d['cpf score'] * weight_n) / 20);
+
     //int score
+
     parent
       .append('rect')
       .attr('y', i * height)
       .attr(
         'x',
-        80 +
-          d['rep score'] * weight_d +
-          d['fsr score'] * weight_s +
-          d['cpf score'] * weight_n,
+        280 +
+          (d['rep score'] * weight_d) / 20 +
+          (d['fsr score'] * weight_s) / 20 +
+          (d['cpf score'] * weight_n) / 20,
       )
       .attr('height', height - 2)
       .attr('fill', '#F39073')
-      .attr('width', d['int score'] * weight_m);
-
+      .attr('width', (d['int score'] * weight_m) / 20);
+    /*
     //irn score
     parent
       .append('rect')
       .attr('y', i * height)
       .attr(
         'x',
-        80 +
+        50 +
           d['rep score'] * weight_d +
           d['fsr score'] * weight_s +
           d['cpf score'] * weight_n +
@@ -501,7 +453,7 @@ function update(
       .attr('y', i * height)
       .attr(
         'x',
-        80 +
+        50 +
           d['rep score'] * weight_d +
           d['fsr score'] * weight_s +
           d['cpf score'] * weight_n +
@@ -512,5 +464,6 @@ function update(
       .attr('height', height - 2)
       .attr('fill', '#F6D53C')
       .attr('width', d['ger score'] * weight_l);
+      */
   });
 }

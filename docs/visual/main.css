@@ -105,7 +105,7 @@ html, body{
     overflow:scroll;
     overflow-x:hidden;
     display: inline-block;
-    width:1460px;
+    width: 1680px;
     padding-left:10px;
     height:800px;
     border-right:1px solid #d6d6d7;
@@ -113,14 +113,14 @@ html, body{
   }
 
   svg{
-    width:1440px;
+    width:1540px;
     min-width:1000px;
-    height:6000px;
+    height:3000px;
     /*border:1px solid black;*/
   }
   #title_renderer svg{
     
-    width:1440px;
+    width:1540px;
     min-width:1200px;
     height:30px;
     /*border:1px solid black;*/
@@ -193,11 +193,9 @@ input{
 }
 
 .most-right-slide {
-  background: #3c6bf6 !important;
-  width: 100px;
-  left: 30%;
-  position: absolute;
+  background: #3c6bf6 
 }
+  
 
 .right-slide2 {
     background: #F6D53C !important;
