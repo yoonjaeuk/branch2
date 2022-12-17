@@ -8,28 +8,15 @@ var L_weight_d = 10;
 var L_weight_s = 10;
 var L_weight_n = 10;
 var L_weight_m = 10;
-/*
 var L_weight_b = 10;
 var L_weight_l = 10;
-*/
 
 var R_weight_d = 10;
 var R_weight_s = 10;
 var R_weight_n = 10;
 var R_weight_m = 10;
-/*
 var R_weight_b = 10;
 var R_weight_l = 10;
-*/
-/*
-var max_rep_score = [];
-var max_fsr_score = [];
-var max_cpf_score = [];
-/*
-var max_int_score = [];
-var max_irn_score = [];
-var max_ger_score = [];
-*/
 
 var group1 = svg.append('g');
 var group2 = svg.append('g');
@@ -41,22 +28,40 @@ var rankWeighted = [];
 var color_r = '#cd2e6e'; //스파클 라인 색
 var color_b = '#2e32cd';
 
-function L_listen(c1, c2, c3) {
+function L_listen(c1, c2, c3, c4, c5) {
   group1.remove();
   group1 = svg.append('g');
   group1.attr('transform', 'translate(0,0)');
   L_weight_d = c1;
   L_weight_s = c2 - c1;
   L_weight_n = c3 - c2;
-  L_weight_m = 40 - c3;
+  L_weight_m = c4 - c3;
+  L_weight_b = c5 - c4;
+  L_weight_l = 60 - c5;
 
-  rankSort(L_weight_d, L_weight_s, L_weight_n, L_weight_m);
+  rankSort(
+    L_weight_d,
+    L_weight_s,
+    L_weight_n,
+    L_weight_m,
+    L_weight_b,
+    L_weight_l,
+  );
   rankOrigin = makeRank();
-  update(d, group1, L_weight_d, L_weight_s, L_weight_n, L_weight_m);
+  update(
+    d,
+    group1,
+    L_weight_d,
+    L_weight_s,
+    L_weight_n,
+    L_weight_m,
+    L_weight_b,
+    L_weight_l,
+  );
   drawCompareLine();
 }
 
-function R_listen(c1, c2, c3) {
+function R_listen(c1, c2, c3, c4, c5) {
   group2.remove();
   group2 = svg.append('g');
   group2.attr('transform', 'translate(750,0)');
@@ -64,11 +69,29 @@ function R_listen(c1, c2, c3) {
   R_weight_d = c1;
   R_weight_s = c2 - c1;
   R_weight_n = c3 - c2;
-  R_weight_m = 40 - c3;
+  R_weight_m = c4 - c3;
+  R_weight_b = c5 - c4;
+  R_weight_l = 60 - c5;
 
-  rankSort(R_weight_d, R_weight_s, R_weight_n, R_weight_m);
+  rankSort(
+    R_weight_d,
+    R_weight_s,
+    R_weight_n,
+    R_weight_m,
+    R_weight_b,
+    R_weight_l,
+  );
   rankWeighted = makeRank();
-  update(d, group2, R_weight_d, R_weight_s, R_weight_n, R_weight_m);
+  update(
+    d,
+    group2,
+    R_weight_d,
+    R_weight_s,
+    R_weight_n,
+    R_weight_m,
+    R_weight_b,
+    R_weight_l,
+  );
   drawCompareLine();
 }
 
@@ -150,94 +173,23 @@ function drawCompareLine() {
 }
 
 //ranking sorting
-function rankSort(w_d, w_s, w_n, w_m) {
+function rankSort(w_d, w_s, w_n, w_m, w_b, w_l) {
   var ret = _.sortBy(d, function (each) {
     var col =
       each['rep score'] * w_d +
       each['fsr score'] * w_s +
       each['cpf score'] * w_n +
-      each['int score'] * w_m;
+      each['int score'] * w_m +
+      each['irn score'] * w_b +
+      each['ger score'] * w_l;
     return -col;
   });
   d = ret;
 }
 
-/*function getMax(data) {
-  // 각 주 마다 download, streaming, social 최대 값 구하기
-
-  var max_rep_score = _.maxBy(data, function (d) {
-    // console.log(d['download' +i]);
-    var v = d['rep score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['rep score'] = v;
-    return v;
-    //return d['download' +i].replace(/,/g, '') * 1;
-  });
-  // console.log('max', max_download['download'+i]);
-
-  var max_fsr_score = _.maxBy(data, function (d) {
-    // console.log(d['download' +i]);
-    var v = d['fsr score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['fsr score'] = v;
-    return v;
-    //return d['download' +i].replace(/,/g, '') * 1;
-  });
-  // console.log('max', max_download['download'+i]);
-
-  var max_cpf_score = _.maxBy(data, function (d) {
-    // * 1 = int 형식
-    var v = d['cpf score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['cpf score'] = v;
-    return v;
-  });
-  /*
-  var max_int_score = _.maxBy(data, function (d) {
-    // * 1 = int 형식
-    var v = d['int score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['int score'] = v;
-    return v;
-  });
-
-  var max_irn_score = _.maxBy(data, function (d) {
-    // * 1 = int 형식
-    var v = d['irn score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['irn score'] = v;
-    return v;
-  });
-
-  var max_ger_score = _.maxBy(data, function (d) {
-    // * 1 = int 형식
-    var v = d['ger score'];
-    v = v + '';
-    v = v.replace(/,/g, '');
-    d['ger score'] = v;
-    return v;
-    
-  });
-*/
-/*
-  max_rep_score.push(max_rep_score['rep score']);
-  max_fsr_score.push(max_fsr_score['fsr score']);
-  max_cpf_score.push(max_cpf_score['cpf score']);
-  
-  max_int_score.push(max_int_score['int score']);
-  max_irn_score.push(max_irn_score['irn score']);
-  max_ger_score.push(max_ger_score['ger score']);
-  */
-//}
-
-d3.json('visual/sqq데이터.json', function (data) {
+d3.json('visual/qs데이터.json', function (data) {
   d = data;
-  rankSort(10, 10, 10, 10);
+  rankSort(10, 10, 10, 10, 10, 10);
   rankOrigin = makeRank();
   rankWeighted = makeRank();
 
@@ -245,8 +197,26 @@ d3.json('visual/sqq데이터.json', function (data) {
 
   group1.attr('transform', 'translate(460, 20)');
   group2.attr('transform', 'translate(750, 0)');
-  update(d, group1, L_weight_d, L_weight_s, L_weight_n, L_weight_m);
-  update(d, group2, R_weight_d, R_weight_s, R_weight_n, R_weight_m);
+  update(
+    d,
+    group1,
+    L_weight_d,
+    L_weight_s,
+    L_weight_n,
+    L_weight_m,
+    L_weight_b,
+    L_weight_l,
+  );
+  update(
+    d,
+    group2,
+    R_weight_d,
+    R_weight_s,
+    R_weight_n,
+    R_weight_m,
+    R_weight_b,
+    R_weight_l,
+  );
 });
 //제목
 title
@@ -286,7 +256,16 @@ title
   .text('institution')
   .style('font', '17px notosanskr');
 
-function update(d, parent, weight_d, weight_s, weight_n, weight_m) {
+function update(
+  d,
+  parent,
+  weight_d,
+  weight_s,
+  weight_n,
+  weight_m,
+  weight_b,
+  weight_l,
+) {
   //console.log("update", d, parent);
   var height = 27;
   // adjust the value
@@ -430,22 +409,22 @@ function update(d, parent, weight_d, weight_s, weight_n, weight_m) {
       .attr('height', height - 2)
       .attr('fill', '#F39073')
       .attr('width', (d['int score'] * weight_m) / 20);
-    /*
+
     //irn score
     parent
       .append('rect')
       .attr('y', i * height)
       .attr(
         'x',
-        50 +
-          d['rep score'] * weight_d +
-          d['fsr score'] * weight_s +
-          d['cpf score'] * weight_n +
-          d['int score'] * weight_m,
+        280 +
+          (d['rep score'] * weight_d) / 20 +
+          (d['fsr score'] * weight_s) / 20 +
+          (d['cpf score'] * weight_n) / 20 +
+          (d['int score'] * weight_m) / 20,
       )
       .attr('height', height - 2)
       .attr('fill', '#9FD299')
-      .attr('width', d['irn score'] * weight_b);
+      .attr('width', (d['irn score'] * weight_b) / 20);
 
     //ger score
     parent
@@ -453,17 +432,16 @@ function update(d, parent, weight_d, weight_s, weight_n, weight_m) {
       .attr('y', i * height)
       .attr(
         'x',
-        50 +
-          d['rep score'] * weight_d +
-          d['fsr score'] * weight_s +
-          d['cpf score'] * weight_n +
-          d['int score'] * weight_m +
-          d['irn score'] * weight_b,
+        280 +
+          (d['rep score'] * weight_d) / 20 +
+          (d['fsr score'] * weight_s) / 20 +
+          (d['cpf score'] * weight_n) / 20 +
+          (d['int score'] * weight_m) / 20 +
+          (d['irn score'] * weight_b) / 20,
       )
 
       .attr('height', height - 2)
       .attr('fill', '#F6D53C')
-      .attr('width', d['ger score'] * weight_l);
-      */
+      .attr('width', (d['ger score'] * weight_l) / 20);
   });
 }
