@@ -3,6 +3,9 @@
   
 <link rel = "stylesheet" href = "visual/main.css">
 <head>
+   
+  <h1 style="display: inline">Interactive Ranking Analysis System</h1>
+  <h2 style="display: inline; color: silver">_QS Universities Rankings</h2>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
@@ -10,14 +13,24 @@
   <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
   
+  <hr>
 
 <div class="ctrl_house">
 
   <div class="controll_panel1">
+  <h3>Assign weights</h3>
+  <ul>
+    <li style="display: inline; font-size: 12px">Reputation</li>
+    <li style="display: inline; font-size: 12px">Faculty Student</li>
+    <li style="display: inline; font-size: 12px">Citiations per Faculty</li>
+    <li style="display: inline; font-size: 12px">International</li>
+    <li style="display: inline; font-size: 12px">International Research Network</li>
+    <li style="display: inline; font-size: 12px">Employment Outcomes</li>
+  </ul>
    <div class="LLL">
     <div id="L_slider-range" style="display:inline-block;"></div>
-     <div id="L_controller">
-      <p>
+    <div id="L_controller">
+    <p style="margin-top: -20px;">
       <input id="L_nValue_d" type="text" name="" value="10" >
       <input id="L_nValue_s" type="text" name="" value="10">
       <input id="L_nValue_n" type="text" name="" value="10">
@@ -31,10 +44,19 @@
    </div> 
 
   <div class="controll_panel2">
+   <h3>Assign weights</h3>
+   <ul>
+    <li style="display: inline; font-size: 12px">Reputation</li>
+    <li style="display: inline; font-size: 12px">Faculty Student</li>
+    <li style="display: inline; font-size: 12px">Citiations per Faculty</li>
+    <li style="display: inline; font-size: 12px">International</li>
+    <li style="display: inline; font-size: 12px">International Research Network</li>
+    <li style="display: inline; font-size: 12px">Employment Outcomes</li>
+  </ul>
    <div class="RRR">
       <div id = "R_slider-range" style = "display:inline-block;"></div>
        <div id="R_controller">
-        <p>
+        <p style="margin-top: -20px;">
         <input id="R_nValue_d" type="text" name="" value="10" >
         <input id="R_nValue_s" type="text" name="" value="10">
         <input id="R_nValue_n" type="text" name="" value="10"> 

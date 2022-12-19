@@ -61,12 +61,11 @@ html, body{
   float:left;
   width:50%;
 
-
 }
 .controll_panel2{
   display:inline-block;
   float:left;
-  width:44.1%;
+  width:50%;
   padding-left:3px;
 
 }
@@ -96,6 +95,7 @@ html, body{
     background-color:white;
     border-bottom:1px solid #d6d6d7;
     border-right:1px solid #d6d6d7;
+
   }
 
 
@@ -130,8 +130,8 @@ html, body{
   }
 
 #controller{
-    margin-top:5px;
-    margin-bottom:10px;
+    margin-top:15px;
+    margin-bottom:50px;
   }
 
 #Value_w{
